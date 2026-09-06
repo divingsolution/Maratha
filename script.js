@@ -21,3 +21,19 @@
   catch{input.focus();input.select();help.textContent='자동 복사를 사용할 수 없습니다. 선택된 계좌를 길게 누르거나 Ctrl/Cmd+C로 복사해주세요.';}
  });
 })();
+
+(() => {
+ const journey=document.getElementById('journey');
+ if(!journey)return;
+ const picker=journey.querySelector('.journey-airlines');
+ const buttons=Array.from(journey.querySelectorAll('[data-airline]'));
+ const panels=Array.from(journey.querySelectorAll('.journey-flight-panel'));
+ if(!picker||!buttons.length||!panels.length)return;
+ function selectAirline(name){
+  buttons.forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.airline===name)));
+  panels.forEach(panel=>panel.hidden=panel.id!=='flight-'+name);
+ }
+ picker.hidden=false;
+ selectAirline('asiana');
+ buttons.forEach(button=>button.addEventListener('click',()=>selectAirline(button.dataset.airline)));
+})();
